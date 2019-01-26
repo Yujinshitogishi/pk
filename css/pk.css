@@ -1,0 +1,298 @@
+body {
+    text-decoration: none;
+}
+
+.board{
+    position: relative;
+}
+
+#score {
+    position: absolute;
+}
+/* active */
+#start{
+    position: absolute;
+    right: 170px;
+    bottom: 100px;
+    font-size: 48px;
+    padding: 24px;
+    border: solid 4px #000000;
+}
+
+.hidden{
+    display:none;
+}
+
+.show{
+    display: block;
+}
+
+    /* display */
+.active_goal{
+    display: block;
+    transform: scale(0);
+    transition: 2s; 
+}
+
+.active_nogoal{
+    display: block;
+    transform: scale(0);
+    transition: 2s; 
+}
+
+
+.goal_box {
+    position: relative;
+}
+
+.nogoal_box {
+    position: relative;
+}
+
+#nogoal_display, #goal_display, #save_display, #nosave_display {
+    position: absolute; 
+    transition-delay:4s;
+    margin: auto;
+    z-index: 110; 
+    top: 20px;
+    left: 500px;
+    width: 40%;
+}
+
+    /* next */
+#next_gk{
+    position: absolute;
+    right: 170px;
+    bottom: 100px;
+    font-size: 48px;
+    padding: 24px;
+    border: solid 4px #cccccc;;
+}
+
+#next_kick {
+    position: absolute;
+    right: 170px;
+    bottom: 100px;
+    font-size: 48px;
+    padding: 24px;
+    border: solid 4px #6210e6;
+    text-decoration: none;
+}
+
+#next_gk:hover {
+    color: #ffffff;
+    background-color: rgb(0, 0, 0);
+}
+
+#next_kick:active {
+    color: #000000;
+    background-color: rgb(194, 27, 27);
+}
+/* #goal_display{
+    /* display: block; */
+    /* transition-delay:4s; */
+/* } */ 
+
+.container_board {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}   
+
+.board {
+    font-size: 15px;
+}
+
+
+/* キーパー */
+
+.gk {
+    position: relative;
+}
+
+#gk_middle {
+    position: absolute;
+    top: -65px;
+    left: 583px;
+    height: 70%;
+    z-index: 100;
+    /* transition: all 2s ease-in-out; */
+}
+
+#gk_left {
+    position: absolute;
+    top: -55px;
+    left: 650px;
+    height: 50%;
+    z-index: 100; 
+    /* transition-delay: 4s; */
+     /* transition: all 4s ease-in-out;  */
+    /* transform: translate(-50px, 0px); 
+    transition-property:transform; */
+}
+
+/* .active #gk_left {
+    transition: all 2s ease-in-out;
+    transform: translate(-50px, 0px); 
+} */
+
+#gk_right {
+    position: absolute;
+    top: -40px;
+    left: 790px;
+    height: 50%;
+    z-index: 100;
+    /* transition: all 2s ease-in-out; */
+}
+
+.active_left{
+    display:block; 
+    /* position1: absolute; */
+     /* transition: all 2s ease-in-out;  */
+     transform: translate(-65px, -25px);  
+     transition: all 2s ease-in-out;
+}
+
+.active_middle{
+    display:block; 
+}
+
+.active_right{
+    display:block;
+    transform: translate(57px,-24px);
+    transition: all 2s ease-in-out;
+}
+
+.goal {
+    position: absolute; 
+    top: -150px;
+    left: 570px;
+    margin: 0 auto 0;
+    text-align: center;
+}
+
+
+/* キッカー */
+
+.harf_bottom{
+    position: relative;
+}
+
+/* .kiccer {
+    position: relative;
+} */
+
+.player {
+    position: absolute; 
+    height: 70%;
+    top: 200px;
+    left: 570px;
+}
+
+#boll {
+    position: absolute; 
+    height: 70%; 
+    top: 333px;
+    left: 650px;
+    /* transform: translate(-100px,200px); */
+    /* transition: 3s;  */
+    transition: all 1.5s ease-in-out;
+}
+
+/* 選択 */
+
+#btn_kick, #btn_save {
+    position: fixed;
+    /* left: 10px; */
+    bottom: 80px;
+    padding: 8px;
+
+}
+
+#arrow_left {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 50px 100px 50px 0;
+    border-color: transparent #000000 transparent transparent;
+    box-shadow: 5px 0 0 0 #2e2d2d;
+    color: #000000;
+    justify-content: center;
+    position: relative;
+    font-size: 24px;
+    
+}
+
+#arrow_left p {
+position: absolute;
+top: 8px;
+left: 8px;
+}
+
+#arrow_left:active {
+    box-shadow: none;
+    border-width: 50px 105px 50px 0;
+}
+
+.as {
+    position: absolute;
+    bottom: -40px;
+    left: 190px;
+    font-size: 24px;
+
+}
+
+.af {
+    position: absolute;
+    bottom: -40px;
+    left: 330px;
+    font-size: 24px;
+}
+
+.ad {
+    position: absolute;
+    bottom: -40px;
+    left: 88px;
+    font-size: 24px;
+}
+
+#arrow_middle{
+
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 62.5px 100px 62.5px;
+    border-color: transparent transparent #000000 transparent;
+    box-shadow: 0 5px 0 0 #2e2d2d;
+    color: #ffffff;
+    text-align: center;
+    margin: 12px;
+    font-size: 24px;
+    }
+
+#arrow_middle:active {
+    box-shadow: none;
+    border-width: 0 62.5px 105px 62.5px;
+}    
+
+
+#arrow_right {
+    display: inline-block;
+    /* width: 0; */
+    height: 0;
+    border-style: solid;
+    border-width: 50px 0 50px 100px;
+    border-color: transparent transparent transparent #000000;
+    box-shadow: -5px 0 0 0 #2e2d2d;
+    color: #000000;
+    text-align: center;
+    font-size: 24px;
+    }    
+
+#arrow_right:active {
+    box-shadow: none;
+    border-width: 50px 0 50px 105px;
+    }    
+

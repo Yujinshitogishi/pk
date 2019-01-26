@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>じゃんけんアプリ</title>
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <link rel="stylesheet" href="css/pk.css">
+    <script type="text/javascript" src="page._2.js"></script>
+</head>
+<body>
+    <div class="harf-top">
+     <div class="container_board">
+            <!-- <div class="board">
+                <h1>CPU</h1>
+                <p></p>
+            </div> -->
+            <div class="board">
+                <h1 id="score"></h1>
+            </div>
+     </div>
+    <div class="goal_deta"></div>
+     </div>   
+            <div class="gk">
+                <img src="img/1515498788-2 (1).png" class="goal">
+            </div>
+                <img src="img/IMG_4197.PNG" id="gk_middle">
+                <img src="img/IMG_4204.PNG" id="gk_left">
+                <img src="img/IMG_4205.PNG" id="gk_right">
+            
+ 
+        <img src="img/IMG_4236.PNG" id ="goal_display">    
+        <img src="img/IMG_4235.PNG" id ="nogoal_display">
+        <!-- <img src="file:///C:/Users/eugene/iCloudDrive/iCloudDrive/IMG_4241.PNG" id ="save_display">
+        <img src="file:///C:/Users/eugene/iCloudDrive/iCloudDrive/IMG_4242.PNG" id ="nosave_display"> -->
+        <a href="#" id="next_kick">next</a>
+        <a href="#" id="next_gk">next</a>
+
+    <div class="harf-bottom">
+        <div class="kiccer">
+            <img src="img/IMG_4194.PNG" class="player">
+            <img src="img/IMG_4199.PNG" id="boll">
+        </div>
+
+        <div class="choise">
+            <div id="btn_kick">
+                <p class="as">チョキ</p>
+                <p class="ad">グー</p>
+                <p class="af">パー</p>
+                <ul>
+                    <li href="#" id="arrow_left"></li>
+                    <li href="#" id="arrow_middle"></li>
+                    <li href="#" id="arrow_right"></li>
+                </ul>
+            </div>
+            <div id="btn_save">
+                <ul>
+                    <li href="#" id="arrow_left"></li>
+                    <li href="#" id="arrow_middle"></li>
+                    <li href="#" id="arrow_right"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    // 定義
+    (function(){
+    // let left = 1;
+    // let middle = 2;
+    // let right = 3;
+    // let mykicknum_l = $("#arrow_left").index(1);
+    // let mykicknum_m = $("#arrow_middle").index(2);
+    // let mykicknum_r = $("#arrow_right").index(3);
+    // let cpusavenum = $("#keeper_left").index(1);
+    // let cpusavenum = $("#keeper_middle").index(2);
+    // let cpusavenum = $("#keeper_right").index(3);
+    
+    // my
+    // let arrow_left = document.getElementById('arrow_left');
+    // let arrow_middle = document.getElementById('arrow_middle');
+    // let arrow_right = document.getElementById('arrow_right');
+    let my_kick = document.getElementsByTagName('li');
+    
+    // cpu
+
+    let gk_left = document.getElementById('gk_left');
+    let gk_middle = document.getElementById('gk_middle');
+    let gk_right = document.getElementById('gk_right');
+
+    gk_left.className = 'hidden';
+    gk_right.className = 'hidden';
+
+    
+
+    // その他id取得
+    let goal_display = document.getElementById('goal_display');
+    let nogoal_display = document.getElementById('nogoal_display');
+    let save_display = document.getElementById('save_display');
+    let nosave_display = document.getElementById('nosave_display');
+    let goal_deta = document.getElementById('goal_deta');
+    let next_kick = document.getElementById('next_kick');
+    let next_gk = document.getElementById('next_gk');
+    let btn_kick = document.getElementById('btn_kick');
+    let btn_save = document.getElementById('btn_save');
+
+    // 隠し芸
+    goal_display.className = 'hidden';
+    nogoal_display.className = 'hidden';
+    // save_display.className = 'hidden';
+    // nosave_display.className = 'hidden';
+    next_kick.className = 'hidden';
+    next_gk.className = 'hidden';
+    // btn_kick.className = 'hidden';
+    btn_save.className = 'hidden';
+
+    // 定義
+    let i = 0
+    let my_goal = 0
+    let cpu_goal = 0
+    let win = 0;
+
+
+    // cpu動き 
+
+    function cpu_num_a() {
+       return Math.floor(Math.random() * 3);
+    } 
+
+    function cpu_num_b() {
+       return Math.floor(Math.random() * 3);
+    } 
+
+    let cpu_save = cpu_num_a();
+    let cpu_kick = cpu_num_b();
+
+    // let my_turn_kick;
+    // let my_turn_gk;
+
+    // ボール
+    function boll_left(){
+        $("#boll").css({transform: 'translate(-210px, -500px)'});
+    }
+
+    function boll_middle(){
+        $("#boll").css({transform: 'translate(0, -500px)'});
+    }
+
+    function boll_right(){
+        $("#boll").css({transform: 'translate(190px, -500px)'});
+    }
+
+//   let click_kick = function(){
+//               $('#next_gk').on("click",function(){
+//                   my_turn_gk();
+//                    change_b();
+//                });
+//                }
+
+ // next
+
+let click_gk = function(){
+ $('#next_gk').on("click",function(){
+    location.reload(); }); 
+    return click_gk;          
+    }      
+            
+    function change_a() {
+        $('btn_kick').hide();
+        $('btn_save').show();
+    }
+
+     function change_b() {       
+        $('btn_save').hide();
+        $('btn_kick').show();
+    }
+
+
+    // score
+
+     add();
+   function add(){
+       $('#score').html
+           ('YOU '+ win +'G');
+   }
+
+//    自分のターン
+    // 左
+     let my_turn_kick = function(){
+    let btn_left_kick = function() {
+        $('#arrow_left').one("click",function(){
+            // $('#gk_middle').hide();
+            // $("#boll").css({transform: 'translate(-210px, -500px)'});
+            boll_left();
+            $('#arrow_middle,#arrow_right').off("click");
+            change_a();
+
+                 function gk_move(){
+                    switch (cpu_save){
+                        case 0:
+                         gk_left.className='active_left';
+                         gk_middle.className='hidden';
+                         gk_right.className='hidden';
+                        //  nonegoal_display.className='active_nogoal'; 
+                        //  goal_display.className='hidden';
+                        break;
+                        case 1:
+                         gk_left.className='hidden';
+                         gk_middle.className='active_middle';
+                         gk_right.className='hidden'; 
+                        //  goal_display.className='active_goal';
+                        //  nogoal_display.className='hidden';
+                        break;
+
+                        case 2:
+                        //  alert('No Goal');
+                         gk_left.className='hidden';
+                        gk_middle.className='hidden';
+                        gk_right.className='active_right';
+                        // goal_display.className='active_goal';
+                        // nogoal_display.className='hidden';
+                        break;
+                    }
+                    return;
+                  }   
+                    gk_move();
+
+                    function display_goal(){
+                        setTimeout(function(){
+                            switch(cpu_save){
+                                case 0:
+                                // alert('NoGoal');
+                                nogoal_display.className='nogoal_display'; 
+                                goal_display.className='hidden';
+                                next_gk.className = 'next_gk';
+                                break;
+                                case 1:
+                                // alert('Goal');
+                                nogoal_display.className='hidden'; 
+                                goal_display.className='goal_display';
+                                next_gk.className = 'next_gk';
+                                break;
+                                case 2:
+                                // alert('Goal');
+                                nogoal_display.className='hidden'; 
+                                goal_display.className='goal_display';
+                                next_gk.className = 'next_gk';
+                                break;
+                            }
+                             },2000);
+                             return;
+                    }
+                    display_goal();
+                }); 
+        return;
+         }   
+          btn_left_kick(); 
+          return;
+        //  start_left();
+    
+    // 真ん中
+
+        let btn_middle_kick = function() {
+        $('#arrow_middle').one("click",function(){
+            // $("#boll").css({transform: 'translate(0, -500px)'});
+            boll_middle();
+            change_a();
+            $('#arrow_left,#arrow_right').off("click");
+                 function gk_move(){
+                    switch (cpu_save){
+                        case 0:
+                        // alert('jjjj');
+                         gk_left.className='active_left';
+                         gk_middle.className='hidden';
+                         gk_right.className='hidden';
+                         break;
+                        case 1:
+                        // alert('llllll');
+                         gk_left.className='hidden';
+                         gk_middle.className='active_middle';
+                         gk_right.className='hidden'; 
+                        break;
+                        case 2:
+                        // alert('mmmmmmm');
+                         gk_left.className='hidden';
+                        gk_middle.className='hidden';
+                        gk_right.className='active_right';
+                        break;
+                    }
+                    return;
+                    } 
+                    gk_move();
+                    function display_goal(){
+                        setTimeout(function(){
+                            switch(cpu_save){
+                                case 0:
+                                nogoal_display.className='hidden'; 
+                                goal_display.className='goal_display';
+                                next_gk.className = 'next_gk';
+                                break;
+                                case 1:
+                                goal_display.className='hidden'; 
+                                nogoal_display.className='nogoal_display';
+                                next_gk.className = 'next_gk';
+                                break;
+                                case 2:
+                                nogoal_display.className='hidden'; 
+                                goal_display.className='nogoal_display';
+                                next_gk.className = 'next_gk';
+                                break;
+                            }
+                             },2000);
+                             return;
+                    }
+                    display_goal();
+               }); 
+               return;
+         }   
+          btn_middle_kick(); 
+        
+        //  start_middle();   
+              
+    //   右
+
+let btn_right_kick = function() {
+$('#arrow_right').one("click",function(){
+    // $("#boll").css({transform: 'translate(190px, -500px)'});
+    boll_right();
+    change_a();
+$('#arrow_left,#arrow_middle').off("click");
+        function gk_move(){
+        switch (cpu_save){
+            case 0:
+            // alert('jjjj');
+                gk_left.className='active_left';
+                gk_middle.className='hidden';
+                gk_right.className='hidden';
+                break;
+            case 1:
+            // alert('llllll');
+                gk_left.className='hidden';
+                gk_middle.className='active_middle';
+                gk_right.className='hidden'; 
+            break;
+            case 2:
+            // alert('mmmmmmm');
+                gk_left.className='hidden';
+            gk_middle.className='hidden';
+            gk_right.className='active_right';
+            break;
+        }
+        return;
+        } 
+        gk_move();
+        function display_goal(){
+            setTimeout(function(){
+                switch(cpu_save){
+                    case 0:
+                    // alert('Goal');
+                    goal_display.className='nogoal_display'; 
+                    goal_display.className='hidden';
+                    next_gk.className = 'next_gk';
+                    break;
+                    case 1:
+                    // alert('Goal');
+                    nogoal_display.className='hidden'; 
+                    goal_display.className='goal_display';
+                    next_gk.className = 'next_gk';
+                    break;
+                    case 2:
+                    // alert('NoGoal');
+                    nogoal_display.className='hidden'; 
+                    nogoal_display.className='nogoal_display';
+                    next_gk.className = 'next_gk';
+                    break;
+                }
+                    },2000);
+            return;
+        }
+        display_goal();
+    }); 
+    return;
+}   
+btn_right_kick();    
+return;
+} 
+// click_kick();
+ my_turn_kick();  
+click_gk();
+
+
+    
+
+let my_turn_gk = function(){
+    $('btn_save').show();
+    let btn_left_gk = function(){
+        $('#arrow_left').one("click",function(){
+        $('#gk_middle').hide();
+        $('#gk_right').hide();
+        $('#gk_left').show();
+        $("#gk_left").css({transform: 'translate(-65px, -27px)'});
+        $('#arrow_middle,#arrow_right').off("click");
+
+
+            function boll_move(){
+                switch (cpu_kick){
+                    case 0:
+                    boll_left();
+                    break;
+                    case 1:
+                    boll_middle();
+                    break;
+                    case 2:
+                boll_right();
+                    break;
+                }
+            }   
+                boll_move();
+
+                function display_save(){
+                    setTimeout(function(){
+                        switch(cpu_kick){
+                            case 0:
+                            // alert('NoGoal');
+                            nogoal_display.className='nogoal_display'; 
+                            goal_display.className='hidden';
+                            next_kick.className = 'next_kick';
+                            break;
+                            case 1:
+                            // alert('Goal');
+                            nogoal_display.className='hidden'; 
+                            goal_display.className='goal_display';
+                            next_kick.className = 'next_kick';
+                            break;
+                            case 2:
+                            // alert('Goal');
+                            nogoal_display.className='hidden'; 
+                            goal_display.className='goal_display';
+                            next_kick.className = 'next_kick';
+                            break;
+                        }
+                        },2000);
+                }
+                display_save();          
+    });         
+    }
+    btn_left_gk();
+
+
+
+let btn_middle_gk = function(){
+$('#arrow_middle').one("click",function(){
+    $('#gk_right').hide();
+    $('#gk_left').hide();
+    $('#gk_middle').show();
+    $('#arrow_left,#arrow_right').off("click");
+
+            function boll_move(){
+                switch (cpu_kick){
+                    case 0:
+                    boll_left();
+                    break;
+                    case 1:
+                    boll_middle();
+                    break;
+                    case 2:
+                boll_right();
+                    break;
+                }
+            }   
+                boll_move();
+
+                function display_save(){
+                    setTimeout(function(){
+                        switch(cpu_kick){
+                            case 0:
+                            // alert('NoGoal');
+                            nogoal_display.className='hidden'; 
+                            goal_display.className='goal_display';
+                            next_kick.className = 'next_kick';
+                            break;
+                            case 1:
+                            // alert('Goal');
+                            nogoal_display.className='nogoal_display'; 
+                            goal_display.className='hidden';
+                            next_kick.className = 'next_kick';
+                            break;
+                            case 2:
+                            // alert('Goal');
+                            nogoal_display.className='hidden'; 
+                            goal_display.className='goal_display';
+                            next_kick.className = 'next_kick';
+                            break;
+                        }
+                        },2500);
+                }
+                display_save();          
+    });       
+    }
+    btn_middle_gk();
+
+
+let btn_right_gk = function(){
+    $('#arrow_right').one("click",function(){
+    $('#gk_middle').hide();
+    $('#gk_left').hide();
+    $('gk_right').show();
+    $("#gk_right").css({transform: 'translate(57px, 0px)'});
+    $('#arrow_middle,#arrow_left').off("click");
+
+function boll_move(){
+    switch (cpu_kick){
+        case 0:
+        boll_left();
+        break;
+        case 1:
+        boll_middle();
+        break;
+        case 2:
+        boll_right();
+            break;
+                        }
+                }   
+                boll_move();
+
+function display_save(){
+    setTimeout(function(){
+        switch(cpu_kick){
+            case 0:
+            // alert('NoGoal');
+            nogoal_display.className='hidden'; 
+            goal_display.className='goal_display';
+            next_kick.className = 'next_kick';
+            break;
+            case 1:
+            // alert('Goal');
+            nogoal_display.className='hidden'; 
+            goal_display.className='goal_display';
+            next_kick.className = 'next_kick';
+            break;
+            case 2:
+            // alert('Goal');
+            nogoal_display.className='nogoal_display'; 
+            goal_display.className='hidden';
+            next_kick.className = 'next_kick';
+            break;
+                    }
+        },2500);
+        }
+        display_save();                             
+    });         
+    } 
+    btn_right_gk();       
+}
+
+let judge = "";
+    // judge判定
+for(let i= 1; i<=10; win++ ){    
+    if (judge === 'goal_display'){
+        win++
+        continue;
+    } else {
+        continue;
+    }
+     }
+})();
+
+</script>
+</html>

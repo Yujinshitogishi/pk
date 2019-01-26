@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>じゃんけんアプリ</title>
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <link rel="stylesheet" href="css/pk.css">
+</head>
+<body>
+    <div class="harf-top">
+        <div class="container_board">
+            <!-- <div class="board">
+                <h1>CPU</h1>
+                <p></p>
+            </div> -->
+            <div class="board">
+                <h1 class="score"></h1>
+            </div>
+        </div>      
+        <div class="goal_deta"></div>
+    </div>   
+        <div class="gk">
+            <img src="img/1515498788-2 (1).png" class="goal">
+        </div>
+            <img src="img/IMG_4197.PNG" id="gk_middle">
+            <img src="img/IMG_4204.PNG" id="gk_left">
+            <img src="img/IMG_4205.PNG" id="gk_right">
+            <img src="img/IMG_4236.PNG" id ="goal_display">    
+            <img src="img/IMG_4235.PNG" id ="nogoal_display">      
+            <a href="#" id="next_gk">next</a>
+            <a href="#" id="end">終了</a>
+
+    <div class="harf-bottom">
+        <div class="kiccer">
+            <img src="img/IMG_4194.PNG" class="player">
+            <img src="img/IMG_4199.PNG" id="boll">
+        </div>
+
+        <div class="choise">
+            <div id="btn_kick">
+                <p class="as">チョキ</p>
+                <p class="ad">グー</p>
+                <p class="af">パー</p>
+                <ul>
+                    <li href="#" id="arrow_left"></li>
+                    <li href="#" id="arrow_middle"></li>
+                    <li href="#" id="arrow_right"></li>
+                </ul>
+            </div>
+            <div id="btn_save">
+                <ul>
+                    <li href="#" id="arrow_left"></li>
+                    <li href="#" id="arrow_middle"></li>
+                    <li href="#" id="arrow_right"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+
+    // 定義
+(function(){
+    
+    let my_kick = document.getElementsByTagName('li');
+    
+    // cpu
+
+    let gk_left = document.getElementById('gk_left');
+    let gk_middle = document.getElementById('gk_middle');
+    let gk_right = document.getElementById('gk_right');
+
+    gk_left.className = 'hidden';
+    gk_right.className = 'hidden';
+
+    
+
+    // その他
+    let goal_display = document.getElementById('goal_display');
+    let nogoal_display = document.getElementById('nogoal_display');
+    let save_display = document.getElementById('save_display');
+    let nosave_display = document.getElementById('nosave_display');
+    let goal_deta = document.getElementById('goal_deta');
+    let next_kick = document.getElementById('next_kick');
+    let next_gk = document.getElementById('next_gk');
+    let btn_kick = document.getElementById('btn_kick');
+    let btn_save = document.getElementById('btn_save');
+
+    $('next_gk').hide();
+    goal_display.className = 'hidden';
+    nogoal_display.className = 'hidden';
+    btn_save.className = 'hidden';
+
+    
+    let my_goal = 0;
+    let cpu_goal = 0;
+    let win = 0;
+
+
+    // cpu動き 
+
+    function cpu_num_a() {
+       return Math.floor(Math.random() * 3);
+    } 
+
+    function cpu_num_b() {
+       return Math.floor(Math.random() * 3);
+    } 
+
+    let cpu_save = cpu_num_a();
+    let cpu_kick = cpu_num_b();
+
+
+
+    // ボール
+    function boll_left(){
+        $("#boll").css({transform: 'translate(-210px, -500px)'});
+    }
+
+    function boll_middle(){
+        $("#boll").css({transform: 'translate(0, -500px)'});
+    }
+
+    function boll_right(){
+        $("#boll").css({transform: 'translate(190px, -500px)'});
+    }
+
+    // next_btn
+
+    let click_gk = function(){
+        $('#next_gk').on("click",function(){
+            location.reload();
+        }); 
+        return click_gk;          
+    }      
+            
+    // 成績
+     
+    function score(){
+        $('.score').html(`${win}連勝中`);
+        return;
+    }
+    score();
+        
+    // ゴールキーパーの動き
+
+    function gk_move_a(){
+        gk_left.className='active_left';
+        gk_middle.className='hidden';
+        gk_right.className='hidden'; 
+    }
+
+    function gk_move_b(){
+        gk_left.className='hidden';
+        gk_middle.className='active_middle';
+        gk_right.className='hidden'; 
+    }
+
+    function gk_move_c(){
+        gk_left.className='hidden';
+        gk_middle.className='hidden';
+        gk_right.className='active_right'; 
+    }
+
+    
+    // 表示(goal)
+    function display_a(){
+        nogoal_display.className ='nogoal_display'; 
+        goal_display.className='hidden';
+        next_gk.className = 'next_gk';
+    }
+     const loser = display_a();
+
+    function display_b(){
+        nogoal_display.className='hidden'; 
+        goal_display.className='goal_display';
+        next_gk.className = 'next_gk';
+        return;
+    }
+         const winner = display_b();
+
+    function display_goal(){
+        setTimeout(function(){        
+            switch(cpu_save){
+                case 0:
+                return display_a();
+                break;
+                case 1:
+                return display_b();
+                break;
+                case 2:
+                return display_b();
+                break;
+            }
+            }, 1800);
+              return; 
+        }  
+
+    // localstage
+    // データ保存
+    let save =function(){
+        $('#end').on("click",function(){
+            localStorage.setItem("game",win);
+            alert('kjfl');
+        });
+    }
+    // データを取り出す
+    let pick = function(){
+        $('').on("click",function(){
+            localStorage.getItem("game");
+        });
+    }
+
+
+
+    // judge
+    let judge = function(){
+        if (display_goal() === display_a){
+            let goal;
+        }
+        else{
+            let miss;
+        }
+    }
+   
+
+    // 攻撃
+
+    let my_turn_kick = function(){
+
+    // 左キック
+    let btn_left_kick = function() {
+    $('#arrow_left').one("click",function(){ ;  
+        boll_left();
+        return display_goal();
+    function gk_move(){
+    switch (cpu_save){
+        case 0:
+            gk_move_a();       
+        break;
+        case 1:
+            gk_move_b();
+        break;
+
+        case 2:
+            gk_move_c(); 
+        break;
+    }
+    }   
+    gk_move();  
+    });
+    }
+    btn_left_kick(); 
+
+    // 真ん中キック
+    let btn_middle_kick = function() {
+    $('#arrow_middle').one("click",function(){;
+        $('#arrow_left,#arrow_right').off("click");
+        boll_middle();
+        function gk_move(){
+            switch (cpu_save){
+                case 0:
+                gk_move_a();
+                    break;
+                case 1:
+                gk_move_b();
+                break;
+                case 2:
+                gk_move_c();
+                break;
+            }
+            } 
+                gk_move();
+        function display_goal(){
+            setTimeout(function(){
+                switch(cpu_save){
+                    case 0:
+                    display_b();
+                    break;
+                    case 1:
+                    display_a();
+                    break;
+                    case 2:
+                    display_b();
+                    break;
+                }
+                    },1800);
+                    return;
+        }
+         display_goal();
+            }); 
+        }   
+        btn_middle_kick(); 
+
+ // 右のキック
+    let btn_right_kick = function() {
+    $('#arrow_right').one("click",function(){
+        boll_right();
+        $('#arrow_left,#arrow_middle').off("click");
+                function gk_move(){
+                switch (cpu_save){
+                    case 0:
+                    gk_move_a();
+                        break;
+                    case 1:
+                    gk_move_b();
+                    break;
+                    case 2:
+                    gk_move_c();
+                    break;
+                }
+                return;
+                } 
+        gk_move();
+
+    function display_goal(){
+    setTimeout(function(){
+        switch(cpu_save){
+        case 0:
+       display_b();
+        break;
+        case 1:
+       display_b();
+        break;
+        case 2:
+        display_a();
+        break;
+    }
+        },2000);
+        return ;
+                }
+    display_goal();
+                }); 
+    }   
+    return btn_right_kick();    
+    return judge();
+} 
+// click_kick();
+my_turn_kick();  
+click_gk();
+
+
+for(i=1; i<10; i++){
+    let result = my_turn_kick();
+    if(result === winner){
+        alert("jghu");
+        win++; 
+        continue;
+     }else if(result === loser) {
+     alert('ggggg');
+     pick();
+     }
+ }
+})();
+
+</script>
+</html>
